@@ -1,32 +1,29 @@
-struct Custom {
-    age: usize,
-    name: String,
-}
+fn practice(nums: Vec<usize>, index: usize) -> usize {
+    nums.get(index).unwrap_or(&index) * 5
 
-enum Item {
-    Number(usize),
-    String(String),
-    MyCustom(Custom),
-}
+    // if let Some(nr) = nums.get(index) {
+    //     return nr * 5;
+    // }
 
-fn append(items: &mut Vec<Item>) {
-    items.push(Item::Number(2))
+    // index * 5
 }
 
 fn main() {
-    let foo = Item::MyCustom(Custom {
-        age: 30,
-        name: "Patrick".into(),
-    });
+    println!("by value: {}.", practice(vec![1, 2, 3, 4], 2));
+    println!("by index: {}.", practice(vec![1, 2, 3, 4], 4));
+}
 
-    let mut items: Vec<_> = vec![
-        Item::Number(2),
-        Item::String("Patrick".into()),
-        Item::MyCustom(Custom {
-            age: 30,
-            name: "Patrick Wozniak".into(),
-        }),
-    ];
+#[cfg(test)]
+mod Tests {
+    use crate::practice;
 
-    append(&mut items);
+    #[test]
+    fn should_multiple_value() {
+        assert_eq!(practice(vec![1, 2, 3, 4], 2), 15)
+    }
+
+    #[test]
+    fn should_multiple_index() {
+        assert_eq!(practice(vec![1, 2, 3, 4], 4), 20)
+    }
 }
